@@ -159,6 +159,8 @@ Longhouse is not yet ready for broad implementation contributions while its init
 
 Discussion, questions, and carefully scoped suggestions are welcome through [GitHub Issues](https://github.com/RKALM/longhouse/issues).
 
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before proposing or implementing a change.
+
 Development will follow a disciplined workflow:
 
 ```text
