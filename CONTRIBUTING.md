@@ -1,4 +1,3 @@
-
 # Contributing to Longhouse
 
 Thank you for considering a contribution to Longhouse.
