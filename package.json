@@ -1,0 +1,29 @@
+{
+  "name": "longhouse",
+  "version": "0.0.0",
+  "private": true,
+  "description": "An early-stage TypeScript backend framework for Node.js, built for clarity, robustness, and real engineering understanding.",
+  "license": "MIT",
+  "author": "Robert Kristian Alm",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RKALM/longhouse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RKALM/longhouse/issues"
+  },
+  "homepage": "https://github.com/RKALM/longhouse#readme",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2"
+  }
+}
