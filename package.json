@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/RKALM/longhouse#readme",
   "devDependencies": {
-    "@types/node": "^26.1.2",
+    "@types/node": "^24.13.3",
     "typescript": "^7.0.2"
   }
 }
