@@ -1,0 +1,1 @@
+console.log("Longhouse runtime foundation initialized.");
