@@ -1,7 +1,8 @@
 import { createNodeHttpServer } from "./platform/node-http/create-node-http-server.js";
+import { resolvePort } from "./runtime/resolve-port.js";
 
 const host = "127.0.0.1";
-const port = 3000;
+const port = resolvePort(process.env.PORT);
 
 const server = createNodeHttpServer();
 
