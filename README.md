@@ -9,7 +9,7 @@
 # Longhouse
 
 > [!IMPORTANT]
-> Longhouse is at the earliest stage of development. It does not yet provide an installable framework runtime, a stable public API, or production-ready functionality.
+> Longhouse is still at an early stage of development. It now has an executable TypeScript and native Node.js HTTP foundation, but it does not yet provide an installable framework package, a stable public API, or production-ready functionality.
 
 Longhouse is a TypeScript-first, adapter-based backend application framework for Node.js.
 
@@ -55,34 +55,133 @@ Longhouse is currently in its foundation stage.
 
 ### Available now
 
-* the public project repository;
-* initial project identity and branding;
-* the architectural direction and engineering principles;
-* introductory project documentation;
+* an executable TypeScript and Node.js project foundation;
+* native HTTP server integration using `node:http`;
+* Node-specific HTTP behaviour isolated in the platform-specific layer;
+* validated `HOST` and `PORT` runtime configuration;
+* safe local defaults using `127.0.0.1:3000`;
+* optional local `.env` configuration;
+* compilation to executable ES module JavaScript;
+* TypeScript strict-mode type checking;
+* a native Node.js runtime acceptance test against the compiled output;
+* project identity, branding, and contributor documentation;
 * an MIT licence.
+
+The current HTTP server deliberately returns a temporary `501 Not Implemented` JSON response because framework request handling and routing do not exist yet.
+
+That response exists only to prove the executable HTTP foundation and is not a stable Longhouse public API.
 
 ### Not implemented yet
 
-* an application runtime;
-* published npm packages;
-* HTTP server integration;
-* routing;
+* an installable or published framework package;
+* route registration or matching;
+* route parameters;
+* framework request and response abstractions;
 * middleware;
-* request and response abstractions;
 * dependency injection;
 * modules or controllers;
-* lifecycle hooks;
-* testing utilities;
+* decorators or metadata;
+* application lifecycle hooks;
+* framework testing utilities;
 * command-line tooling;
 * a stable public API.
 
-There is currently nothing to install or use in an application.
+Longhouse can now be built, tested, and run as an executable development foundation, but it is not yet ready to be used as an application framework.
+
+## Development
+
+### Requirements
+
+* Node.js 24 or newer
+* npm
+
+### Install
+
+Install the dependencies from the committed lockfile:
+
+```bash
+npm ci
+```
+
+### Type-check
+
+Check the TypeScript source without emitting build output:
+
+```bash
+npm run typecheck
+```
+
+### Build
+
+Compile the TypeScript source into executable JavaScript:
+
+```bash
+npm run build
+```
+
+The compiled output is written to `dist/`.
+
+### Test
+
+Run the current test suite:
+
+```bash
+npm test
+```
+
+The runtime acceptance test builds Longhouse, creates the compiled native HTTP server, listens on an ephemeral port, performs a real HTTP request, verifies the temporary response, closes the server, and confirms that the test process exits cleanly.
+
+### Run
+
+Build the project first:
+
+```bash
+npm run build
+```
+
+Then start the compiled server:
+
+```bash
+npm start
+```
+
+With the default configuration, Longhouse listens on:
+
+```text
+http://127.0.0.1:3000
+```
+
+Requests currently receive the temporary `501 Not Implemented` response described above.
+
+### Local runtime configuration
+
+Longhouse accepts two environment variables:
+
+* `HOST` — listening host; defaults to `127.0.0.1`;
+* `PORT` — listening port; defaults to `3000`.
+
+For local development, copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+The example contains:
+
+```dotenv
+HOST=127.0.0.1
+PORT=3000
+```
+
+The local `.env` file is optional and is excluded from version control. Runtime configuration is validated before the server begins listening.
+
+Environment variables supplied directly by the runtime environment can also be used without a `.env` file.
 
 ## Architecture direction
 
-Longhouse will be built directly on Node.js.
+Longhouse is built directly on Node.js.
 
-The first platform implementation will use the native `node:http` module:
+The first platform implementation uses the native `node:http` module:
 
 ```text
 Node.js
@@ -94,7 +193,9 @@ Longhouse Node HTTP adapter
 Longhouse framework core
 ```
 
-The platform adapter will be responsible for translating between Node.js and framework-level contracts. The framework core will remain independent of Node-specific request and response types.
+The platform-specific HTTP layer contains Node.js request and response types so that future framework-core code can remain independent of Node-specific transport details.
+
+Framework-core abstractions will be introduced only when framework behaviour actually requires them.
 
 The core is expected to own responsibilities such as:
 
@@ -110,7 +211,7 @@ Express is not intended to sit underneath the Longhouse core. Optional integrati
 
 ## First development milestone
 
-The first implementation milestone will establish one complete HTTP request path:
+The first complete framework milestone will establish one complete HTTP request path:
 
 1. create a Longhouse application;
 2. start a native Node.js HTTP server;
@@ -123,7 +224,7 @@ The first implementation milestone will establish one complete HTTP request path
 9. close the application gracefully;
 10. verify the compiled package through the real Node.js runtime.
 
-This deliberately small milestone will establish the foundation before more advanced functionality is introduced.
+The executable TypeScript and native HTTP foundation, including compiled-runtime verification, is now in place. The remaining framework behaviour will be introduced incrementally rather than through speculative abstractions.
 
 ## Planned direction
 
@@ -144,24 +245,25 @@ These are plans, not promises of currently available functionality. Their design
 
 ## Documentation
 
-Longhouse documentation will be added as the framework foundation develops.
+Longhouse documentation will continue to grow alongside completed framework capabilities.
+
+Current project documentation includes the contributor guide and repository README.
 
 Planned documentation includes:
 
 - a public project guide covering architecture and engineering principles;
-- a contributor onboarding guide;
 - architecture decision records for significant technical choices;
 - implementation guides tied to completed framework capabilities.
 
 ## Contributing
 
-Longhouse is not yet ready for broad implementation contributions while its initial foundation is being established.
+Longhouse is still early in development and is not yet seeking broad, unsupervised implementation contributions.
 
 Discussion, questions, and carefully scoped suggestions are welcome through [GitHub Issues](https://github.com/RKALM/longhouse/issues).
 
 Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before proposing or implementing a change.
 
-Development will follow a disciplined workflow:
+Development follows a disciplined workflow:
 
 ```text
 Issue
